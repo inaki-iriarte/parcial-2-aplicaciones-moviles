@@ -17,9 +17,15 @@
                         <option value="usd">USD</option>
                     </select>
                     <input type="number" placeholder="Ingrese el costo de la compra" step="0.01" id="compra"
-                        @keyup.enter="agregarCompra" v-model="compra">
+                        @keyup.enter="agregarCompra" 
+                        v-model="compra"
+                    >
                     <button @click="agregarCompra">Agregar</button>
                 </div>
+
+                <v-alert :value="alert" border="bottom" type="error">
+                    {{mensajeAlert}}
+                </v-alert>
 
                 <label for="compra-tipo" class="label-tipo">Seleccione el tipo de compra:</label>
                 <select name="compra-tipo" id="compra-tipo" v-model="tipoCompra" class="compra-tipo">
@@ -78,32 +84,40 @@ export default {
         imagenARS: require('../assets/AR.png'),
         imagenUSD: require('../assets/US.png'),
         tipoCompra: 'Compra',
-        compra: '',
+        compra: null,
         listaCompras: [],
         dolar: 0,
         subtotalUSD: 0,
         subtotal: 0,
         impPais: 0,
         impGanancias: 0,
-        total: 0
+        total: 0,
+        alert: false,
+        mensajeAlert: 'Debe ingresar solo números'
     }),
     methods: {
         agregarCompra: function() {
-            let objetoCompra = {};
-            objetoCompra.valor = this.compra;
-            objetoCompra.tipo = this.tipoCompra;
-            this.subtotal += parseFloat(this.compra);
-            if (this.selected == 'usd') {
-                this.subtotalUSD += parseFloat(this.compra);
-                this.subtotal = parseFloat((this.subtotalUSD*this.dolar).toFixed(2));
+            this.alert = false;
+            if(!this.compra) {
+                this.alert = true;
+                return
+            } else {
+                let objetoCompra = {};
+                objetoCompra.valor = this.compra;
+                objetoCompra.tipo = this.tipoCompra;
+                this.subtotal += parseFloat(this.compra);
+                if (this.selected == 'usd') {
+                    this.subtotalUSD += parseFloat(this.compra);
+                    this.subtotal = parseFloat((this.subtotalUSD*this.dolar).toFixed(2));
+                }
+                this.impPais = parseFloat((this.subtotal*0.3).toFixed(2));
+                this.impGanancias = parseFloat((this.subtotal*0.45).toFixed(2));
+                this.total = parseFloat((this.subtotal + this.impGanancias + this.impPais).toFixed(2));
+    
+                this.listaCompras.push(objetoCompra);
+                this.compra = "";
+                this.tipoCompra = 'Compra';
             }
-            this.impPais = parseFloat((this.subtotal*0.3).toFixed(2));
-            this.impGanancias = parseFloat((this.subtotal*0.45).toFixed(2));
-            this.total = parseFloat((this.subtotal + this.impGanancias + this.impPais).toFixed(2));
-
-            this.listaCompras.push(objetoCompra);
-            this.compra = "";
-            this.tipoCompra = 'Compra';
         },
         nuevaMoneda: function() {
             this.listaCompras = [];
@@ -112,6 +126,7 @@ export default {
             this.impPais = 0;
             this.impGanancias = 0;
             this.total = 0;
+            this.alert = false;
         },
         eliminarCompra: function(e) {
             let i = e.target.parentElement.nextElementSibling.innerHTML;
@@ -356,5 +371,9 @@ hr{
 h2{
   margin: 0;
   font-weight: 400;
+}
+
+.v-alert {
+    margin-top: 16px;
 }
 </style>
