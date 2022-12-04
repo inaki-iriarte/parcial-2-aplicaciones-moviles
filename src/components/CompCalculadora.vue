@@ -58,6 +58,12 @@
                     </template>
                 </div>
             </div>
+
+            <div class="cotizacion">
+                <h2>Cotización dolar oficial hoy</h2>
+            
+                <p>1 USD = <span>{{dolar}} ARS</span></p>
+            </div>
         </div>
     </v-container>
 </template>
@@ -121,6 +127,21 @@ export default {
 
             this.listaCompras.splice(i, 1);
         },
+        async getFromRemote(){
+            let response = await fetch("https://www.dolarsi.com/api/api.php?type=valoresprincipales")
+            if(response.ok) {
+                const results = await response.json();
+                let cotizacion = results[0].casa.venta;
+                cotizacion = cotizacion.replace(",", ".");
+                cotizacion = parseFloat(cotizacion);
+                this.dolar = cotizacion;
+            } else {
+                this.dolar = 160;
+            }
+        }
+    },
+    mounted() {
+        this.getFromRemote()
     }
   }
 </script>
@@ -311,5 +332,28 @@ hr{
   border-radius: 12px;
   color: white;
   font-size: 1.5rem;
+}
+
+.cotizacion{
+  margin: 2rem 0;
+  border: 1px solid #808080;
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+}
+
+.cotizacion p{
+  margin: 0;
+  margin-top: 0.5rem;
+  font-weight: 700;
+  font-size: 1.5rem;
+}
+
+.cotizacion p span{
+  color: #154C6B;
+}
+
+h2{
+  margin: 0;
+  font-weight: 400;
 }
 </style>
