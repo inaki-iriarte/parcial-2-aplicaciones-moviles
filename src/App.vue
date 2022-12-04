@@ -2,6 +2,7 @@
   <v-app>
     <v-main>
       <CompCalculadora/>
+      <CompInfo/>
     </v-main>
     <!-- <v-main>
       <HelloWorld/>
@@ -12,13 +13,15 @@
 <script>
 // import HelloWorld from './components/HelloWorld';
 import CompCalculadora from './components/CompCalculadora.vue';
+import CompInfo from './components/CompInfo.vue';
 
 export default {
   name: 'App',
 
   components: {
     // HelloWorld,
-    CompCalculadora
+    CompCalculadora,
+    CompInfo
   },
 
   data: () => ({
