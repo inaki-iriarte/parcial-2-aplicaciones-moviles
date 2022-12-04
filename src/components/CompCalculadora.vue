@@ -343,6 +343,7 @@ hr{
 
 .cotizacion p{
   margin: 0;
+  margin-bottom: 0 !important;
   margin-top: 0.5rem;
   font-weight: 700;
   font-size: 1.5rem;
