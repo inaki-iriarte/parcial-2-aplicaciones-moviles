@@ -30,6 +30,33 @@
                     <option value="Turismo">Pasaje o paquete turístico</option>
                     <option value="Otro">Otros</option>
                 </select>
+
+                <div class="listado">
+                    <template v-if="listaCompras.length">
+                        <ul>
+                            <li v-for="(compra, index) in listaCompras" :key="compra.id">
+                                <span class="listado-tipo">{{compra.tipo}}</span>
+                                <span class="compras">
+                                    <span v-if="selected == 'ars'">ARS</span>
+                                    <span v-if="selected == 'usd'">USD</span>
+                                    {{compra.valor}}
+                                    <img :src="require('../assets/bin.svg')" alt="Eliminar" class="borrar" @click="eliminarCompra">
+                                </span>
+                                <span class="index">{{index}}</span>
+                            </li>
+                        </ul>
+                
+                        <hr>
+                
+                        <p>Subtotal <span>ARS {{subtotal}}</span></p>
+                        <p>+ Impuesto PAÍS <span>ARS {{impPais}}</span></p>
+                        <p>+ Imp. a las Ganancias <span>ARS {{impGanancias}}</span></p>
+                
+                        <hr>
+                
+                        <p id="total">Total con impuestos <span>ARS {{total}}</span></p>
+                    </template>
+                </div>
             </div>
         </div>
     </v-container>
@@ -46,6 +73,13 @@ export default {
         imagenUSD: require('../assets/US.png'),
         tipoCompra: 'Compra',
         compra: '',
+        listaCompras: [],
+        dolar: 0,
+        subtotalUSD: 0,
+        subtotal: 0,
+        impPais: 0,
+        impGanancias: 0,
+        total: 0
     }),
     methods: {
         agregarCompra: function() {
@@ -72,6 +106,20 @@ export default {
             this.impPais = 0;
             this.impGanancias = 0;
             this.total = 0;
+        },
+        eliminarCompra: function(e) {
+            let i = e.target.parentElement.nextElementSibling.innerHTML;
+            if (this.selected == 'usd') {
+                this.subtotalUSD = parseFloat((this.subtotalUSD - this.listaCompras[i].valor).toFixed(2));
+                this.subtotal = parseFloat((this.subtotalUSD*this.dolar).toFixed(2));
+            } else {
+                this.subtotal = parseFloat((this.subtotal - this.listaCompras[i].valor).toFixed(2));
+            }
+            this.impPais = parseFloat((this.subtotal*0.3).toFixed(2));
+            this.impGanancias = parseFloat((this.subtotal*0.45).toFixed(2));
+            this.total = parseFloat((this.subtotal + this.impPais + this.impGanancias).toFixed(2));
+
+            this.listaCompras.splice(i, 1);
         },
     }
   }
@@ -197,5 +245,71 @@ input::-webkit-inner-spin-button {
   font-size: 1rem;
   font-weight: 600;
   appearance: menulist !important;
+}
+
+hr{
+  width: 95%;
+  background-color: #808080;
+  margin: 0.5rem 0;
+}
+
+.listado{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.listado ul{
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.listado ul li{
+  font-size: 1.2rem;
+  width: 100%;
+  margin: 0.2rem 0;
+  font-family: 'Hind', sans-serif;
+  display: flex;
+  justify-content: space-between;
+}
+
+.compras{
+  margin-right: 40px;
+  font-weight: 600;
+}
+
+.borrar{
+  width: 18px;
+  height: 18px;
+}
+.borrar:hover{
+  cursor: pointer;
+}
+
+.index{
+  display: none;
+}
+
+.listado p {
+  width: 90%;
+  font-family: 'Hind', sans-serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+  margin: 0.5rem 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.listado p span{
+  font-weight: 700;
+}
+
+#total{
+  width: 95%;
+  background-color: #266ABC;
+  padding: 1rem;
+  border-radius: 12px;
+  color: white;
+  font-size: 1.5rem;
 }
 </style>
