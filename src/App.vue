@@ -43,4 +43,11 @@ main {
   width: 80%;
   margin: auto;
 }
+
+@media screen and (max-width: 780px) {
+  .container-main {
+    width: 95%;
+    padding: 1rem;
+  }
+}
 </style>

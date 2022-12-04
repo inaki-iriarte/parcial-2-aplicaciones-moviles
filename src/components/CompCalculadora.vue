@@ -376,4 +376,64 @@ h2{
 .v-alert {
     margin-top: 16px;
 }
+
+@media screen and (max-width: 780px) {
+  #calc {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 570px) {
+  .ingreso-compra{
+    height: auto;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .ingreso-compra span{
+    background-color: #EFEFEF;
+  }
+
+  .ingreso-compra select{
+    background-color: #EFEFEF;
+  }
+
+  .ingreso-compra input{
+    height: 90px;
+    border-left: 0;
+    border-top: 2px solid #1A6484;
+    width: 100%;
+  }
+
+  .ingreso-compra button {
+    border-left: none;
+    border-top: 2px solid #1A6484;
+    height: 50px;
+    width: 100%;
+  }
+
+  .listado ul{
+    padding-left: 0;
+    margin-bottom: 0;
+  }
+
+  .listado ul li{
+    margin: 0.2rem 0;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    border-top: 1px solid #808080;
+  }
+  
+  .compras{
+    margin-right: 0;
+  }
+
+  .listado p {
+    width: 90%;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+  }
+}
 </style>

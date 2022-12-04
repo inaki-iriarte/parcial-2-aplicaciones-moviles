@@ -67,4 +67,10 @@ export default {
 .v-expansion-panel::before {
     box-shadow: none;
 }
+
+@media screen and (max-width: 780px) {
+    .v-expansion-panels {
+        width: 100%;
+    }
+}
 </style>
