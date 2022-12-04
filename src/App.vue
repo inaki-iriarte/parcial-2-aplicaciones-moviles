@@ -1,8 +1,10 @@
 <template>
   <v-app>
     <v-main>
-      <CompCalculadora/>
-      <CompInfo/>
+      <div class="container-main">
+        <CompCalculadora/>
+        <CompInfo/>
+      </div>
     </v-main>
     <!-- <v-main>
       <HelloWorld/>
@@ -29,3 +31,21 @@ export default {
   }),
 };
 </script>
+
+<style>
+div.v-application--wrap {
+  background-color: #266ABC;
+}
+
+main {
+  margin: 1rem 0;
+}
+
+.container-main {
+  background-color: #EFEFEF;
+  padding: 2rem;
+  border-radius: 25px;
+  width: 80%;
+  margin: auto;
+}
+</style>

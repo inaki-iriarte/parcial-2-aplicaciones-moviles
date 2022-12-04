@@ -32,6 +32,10 @@ export default {
     color: #1E1E1E;
 }
 
+.v-expansion-panel {
+    background-color: #EFEFEF !important;
+}
+
 .v-expansion-panels {
     border-radius: 12px;
     width: 90%;
