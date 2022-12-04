@@ -1,4 +1,7 @@
-# parcial-2
+# Parcial 2 - Aplicaciones para Dispositivos Móviles
+## Iñaki Iriarte
+
+
 
 ## Project setup
 ```
